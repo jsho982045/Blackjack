@@ -1,22 +1,27 @@
 body {
-    font-family: Arial, sans-serif;
     background-color: #006400;
-    color: #fff;
-    text-align: center;
-    padding: 20px;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
 }
 
 .table {
-    max-width: 800px;
-    margin: 0 auto;
-    background-color: #004d00;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    width: 80%;
+    height: 80%;
+    background-color: #006400;
+    border-radius: 50% 50% 0 0;
+    border: 20px solid #8B4513;
+    position: relative;
 }
 
-.dealer-area, .player-area {
-    margin-bottom: 20px;
+.dealer, .player {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 10px;
 }
 
 .cards {
@@ -25,35 +30,41 @@ body {
     margin: 10px 0;
 }
 
-.cards .card {
-    width: 60px;
-    height: 90px;
-    margin: 5px;
-    border-radius: 5px;
+.card {
+    width: 50px;
+    height: 75px;
     background-size: cover;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    margin: 0 5px;
 }
 
 .score {
-    margin-top: 10px;
+    color: white;
+    font-size: 18px;
 }
 
-.controls button {
-    margin: 5px;
-    padding: 10px 20px;
-    font-size: 16px;
+.controls {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+button {
     background-color: #333;
-    color: #fff;
+    color: white;
     border: none;
-    border-radius: 5px;
+    padding: 10px 20px;
+    margin: 0 10px;
     cursor: pointer;
+    border-radius: 5px;
 }
 
-.controls button:disabled {
+button:hover {
     background-color: #555;
 }
 
 #message {
+    color: white;
+    font-size: 20px;
+    text-align: center;
     margin-top: 20px;
-    font-size: 18px;
 }
