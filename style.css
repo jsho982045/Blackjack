@@ -1,70 +1,132 @@
 body {
-    background-color: #006400;
-    font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
+  background-color: #006400;
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
 }
 
 .table {
-    width: 80%;
-    height: 80%;
-    background-color: #006400;
-    border-radius: 50% 50% 0 0;
-    border: 20px solid #8B4513;
-    position: relative;
+  width: 80%;
+  height: 80%;
+  background-color: #006400;
+  border-radius: 50% 50% 0 0;
+  border: 20px solid #8B4513;
+  position: absolute;
 }
 
 .dealer, .player {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 10px;
 }
 
 .cards {
-    display: flex;
-    justify-content: center;
-    margin: 10px 0;
+  display: flex;
+  justify-content: center;
+  margin: 10px 0;
 }
 
 .card {
-    width: 50px;
-    height: 75px;
-    background-size: cover;
-    margin: 0 5px;
+  width: 50px;
+  height: 75px;
+  background-size: cover;
+  margin: 0 5px;
 }
 
 .score {
-    color: white;
-    font-size: 18px;
+  color: white;
+  font-size: 18px;
 }
 
 .controls {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
 }
 
 button {
-    background-color: #333;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    margin: 0 10px;
-    cursor: pointer;
-    border-radius: 5px;
+  background-color: #333;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  margin: 0 10px;
+  cursor: pointer;
+  border-radius: 5px;
 }
 
 button:hover {
-    background-color: #555;
+  background-color: #555;
 }
 
+.deal-button{
+  
+} 
+
 #message {
-    color: white;
-    font-size: 20px;
-    text-align: center;
-    margin-top: 20px;
+  color: white;
+  font-size: 20px;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.drop-zone {
+  width: 100px;
+  height: 100px;
+  border: 2px dashed white;
+  border-radius: 50%;
+  margin: 20px 0;
+}
+
+.chips {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin: 20px 0;
+  background-color: #014D43;
+  box-shadow: 0 0 0 5px #282828 inset, 0 0 0 10px #969696 inset, 0 0 6px rgba(255, 255, 255, 0.2);
+}
+
+.pokerchip {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 75px;
+  height: 75px;
+  border-radius: 50%;
+  text-align: center;
+  font-family: 'Fredoka-One', serif;
+  font-size: 16px;
+  font-weight: bold;
+  color: rgb(211, 144, 0);
+  background-size: cover;
+  cursor: pointer;
+}
+
+.pokerchip.white {
+  background: #dad2ba;
+  border: 13px dashed white;
+}
+
+.pokerchip.red {
+  background: #bc2943;
+  border: 13px dashed white;
+}
+
+.pokerchip.blue {
+  background: #007b93;
+  border: 13px dashed white;
+}
+
+.pokerchip.green {
+  background: #00794e;
+  border: 13px dashed white;
+}
+
+.pokerchip.black {
+  background: #231f20;
+  border: 13px dashed white;
 }

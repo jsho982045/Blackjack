@@ -7,12 +7,16 @@ document.addEventListener("DOMContentLoaded", function() {
     const dealerScoreElement = document.getElementById("dealer-score");
     const playerScoreElement = document.getElementById("player-score");
     const messageElement = document.getElementById("message");
+    const chipsContainer = document.getElementById("chips");
+    const dropZone = document.getElementById("chip-drop-zone");
+    const betAmountElement = document.getElementById("bet-amount");
 
     let dealerCards = [];
     let playerCards = [];
     let deckId;
     let dealerScore = 0;
     let playerScore = 0;
+    let currentBet = 0;
 
     function createDeck() {
         return fetch('https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1')
@@ -92,6 +96,13 @@ document.addEventListener("DOMContentLoaded", function() {
         hitButton.disabled = true;
         standButton.disabled = true;
         dealButton.disabled = false;
+        removeChipsFromDropZone();
+    }
+
+    function removeChipsFromDropZone() {
+        dropZone.innerHTML = '';
+        currentBet = 0;
+        betAmountElement.textContent = `Bet: $${currentBet}`;
     }
 
     dealButton.addEventListener("click", function() {
@@ -142,11 +153,71 @@ document.addEventListener("DOMContentLoaded", function() {
     function determineWinner() {
         if (dealerScore > playerScore && dealerScore <= 21) {
             messageElement.textContent = "Dealer wins!";
+            removeChipsFromDropZone(); // Remove chips if the player loses
         } else if (dealerScore === playerScore) {
             messageElement.textContent = "It's a tie!";
         } else {
             messageElement.textContent = "You win!";
+            // Handle win logic, e.g., doubling the bet
         }
+        betAmountElement.textContent = `Bet: $${currentBet}`;
         endGame();
     }
+
+    // Make chips draggable
+    chipsContainer.addEventListener("dragstart", function(e) {
+        if (e.target.classList.contains("pokerchip")) {
+            e.dataTransfer.setData("text/plain", e.target.dataset.value);
+            setTimeout(() => {
+                e.target.style.visibility = "hidden";
+            }, 0);
+        }
+    });
+
+    chipsContainer.addEventListener("dragend", function(e) {
+        if (e.target.classList.contains("pokerchip")) {
+            e.target.style.visibility = "visible";
+        }
+    });
+
+    dropZone.addEventListener("dragover", function(e) {
+        e.preventDefault();
+    });
+
+    dropZone.addEventListener("drop", function(e) {
+        e.preventDefault();
+        const chipValue = parseInt(e.dataTransfer.getData("text/plain"));
+        currentBet += chipValue;
+        betAmountElement.textContent = `Bet: $${currentBet}`;
+
+        const chipElement = document.createElement("div");
+        chipElement.classList.add("pokerchip");
+        chipElement.dataset.value = chipValue;
+        chipElement.style.width = "20px";
+        chipElement.style.height = "20px";
+        chipElement.style.fontSize = "12px";
+        chipElement.style.lineHeight = "20px";
+        chipElement.style.backgroundImage = e.target.style.backgroundImage;
+        dropZone.appendChild(chipElement);
+    });
+
+    function getChipColor(value) {
+        switch (value) {
+            case 5:
+                return "red";
+            case 10:
+                return "blue";
+            case 25:
+                return "green";
+            case 50:
+                return "black";
+            case 100:
+                return "yellow";
+            default:
+                return "gray";
+        }
+    }
 });
+
+
+   

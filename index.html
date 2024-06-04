@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blackjack Game</title>
+    <link href='https://fonts.googleapis.com/css?family=Fredoka+One' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -15,11 +17,20 @@
         <div class="player">
             <div id="player-cards" class="cards"></div>
             <div id="player-score" class="score">Score: 0</div>
+            <div id="bet-amount" class="score">Bet: $0</div>
+            <div id="chip-drop-zone" class="drop-zone"></div>
         </div>
         <div class="controls">
             <button id="deal-button">Deal</button>
             <button id="hit-button" disabled>Hit</button>
             <button id="stand-button" disabled>Stand</button>
+        </div>
+        <div id="chips" class="chips">
+            <div class="pokerchip chip white" data-value="1">$1</div>
+            <div class="pokerchip chip red" data-value="5">$5</div>
+            <div class="pokerchip chip blue" data-value="10">$10</div>
+            <div class="pokerchip chip green" data-value="25">$25</div>
+            <div class="pokerchip chip black" data-value="100">$100</div>
         </div>
         <div id="message"></div>
     </div>
