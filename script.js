@@ -11,6 +11,26 @@ document.addEventListener("DOMContentLoaded", function() {
     const dropZone = document.getElementById("chip-drop-zone");
     const betAmountElement = document.getElementById("bet-amount");
 
+    hitButton.style.display = 'none';
+    standButton.style.display = 'none';
+    dealButton.style.display = 'inline-block';
+
+    dealButton.addEventListener("click", function() {
+        createDeck().then(() => {
+            drawCards(4).then(cards => {
+                dealerCards = [cards[0], cards[1]];
+                playerCards = [cards[2], cards[3]];
+                updateScores();
+                renderCards(true); // Pass true to indicate the initial render with one dealer card hidden
+                messageElement.textContent = "";
+                hitButton.style.display = 'inline-block';
+                standButton.style.display = 'inline-block';
+                dealButton.style.display = 'none';
+                checkForEndGame();
+            });
+        });
+    });
+
     let dealerCards = [];
     let playerCards = [];
     let deckId;
@@ -67,13 +87,22 @@ document.addEventListener("DOMContentLoaded", function() {
         return score;
     }
 
-    function renderCards() {
-        dealerCardsElement.innerHTML = dealerCards.map(card => getCardHTML(card)).join("");
+    function renderCards(initial = false) {
+        dealerCardsElement.innerHTML = dealerCards.map((card, index) => {
+            if (initial && index === 1) {
+                return `<div class="card back"></div>`;
+            }
+            return getCardHTML(card);
+        }).join("");
         playerCardsElement.innerHTML = playerCards.map(card => getCardHTML(card)).join("");
     }
 
     function getCardHTML(card) {
         return `<div class="card" style="background-image: url('${card.image}');"></div>`;
+    }
+    
+    function revealDealerCard() {
+        renderCards(); // Re-render without hiding any cards
     }
 
     function checkForEndGame() {
@@ -96,6 +125,9 @@ document.addEventListener("DOMContentLoaded", function() {
         hitButton.disabled = true;
         standButton.disabled = true;
         dealButton.disabled = false;
+        hitButton.style.display = 'none';
+        standButton.style.display = 'none';
+        dealButton.style.display = 'inline-block';
         removeChipsFromDropZone();
     }
 
@@ -111,11 +143,11 @@ document.addEventListener("DOMContentLoaded", function() {
                 dealerCards = [cards[0], cards[1]];
                 playerCards = [cards[2], cards[3]];
                 updateScores();
-                renderCards();
+                renderCards(true); // Pass true to indicate the initial render with one dealer card hidden
                 messageElement.textContent = "";
-                hitButton.disabled = false;
-                standButton.disabled = false;
-                dealButton.disabled = true;
+                hitButton.style.display = 'inline-block';
+                standButton.style.display = 'inline-block';
+                dealButton.style.display = 'none';
                 checkForEndGame();
             });
         });
@@ -131,24 +163,25 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     standButton.addEventListener("click", function() {
-        function dealerPlay() {
-            if (dealerScore < 17) {
-                drawCards(1).then(cards => {
-                    dealerCards.push(cards[0]);
-                    updateScores();
-                    renderCards();
-                    if (dealerScore < 17) {
-                        dealerPlay();
-                    } else {
-                        determineWinner();
-                    }
-                });
-            } else {
-                determineWinner();
-            }
+    function dealerPlay() {
+        revealDealerCard(); // Reveal the dealer's hidden card
+        if (dealerScore < 17) {
+            drawCards(1).then(cards => {
+                dealerCards.push(cards[0]);
+                updateScores();
+                renderCards();
+                if (dealerScore < 17) {
+                    dealerPlay();
+                } else {
+                    determineWinner();
+                }
+            });
+        } else {
+            determineWinner();
         }
-        dealerPlay();
-    });
+    }
+    dealerPlay();
+});
 
     function determineWinner() {
         if (dealerScore > playerScore && dealerScore <= 21) {
