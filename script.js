@@ -101,6 +101,9 @@ document.addEventListener("DOMContentLoaded", function() {
         playerScore = calculateScore(playerCards);
         dealerScoreElement.textContent = `Score: ${initial ? getCardValue(dealerCards[0]) : dealerScore}`;
         playerScoreElement.textContent = `Score: ${playerScore}`;
+
+        dealerScoreElement.style.display = 'block';
+        playerScoreElement.style.display = 'block';
     }
 
     function calculateScore(cards, hideSecondCard = false) {
@@ -159,6 +162,10 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     function endGame() {
+
+        dealerScoreElement.style.display = 'none';
+        playerScoreElement.style.display = 'none';
+        
         // Disable and hide the game action buttons
         hitButton.disabled = true;
         standButton.disabled = true;
