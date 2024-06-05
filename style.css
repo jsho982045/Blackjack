@@ -48,6 +48,10 @@ body {
   font-size: 18px;
 }
 
+#bet-amount{
+  margin-left: px;
+}
+
 .controls {
   display: flex;
   justify-content: center;
@@ -68,6 +72,21 @@ button:hover {
   background-color: #555;
 }
 
+#split-button {
+  background-color: #333;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  margin: 0 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  display: none; /* Initially hidden */
+}
+
+#split-button:hover {
+  background-color: #555;
+}
+
 #message {
   color: white;
   font-size: 20px;
@@ -84,6 +103,7 @@ button:hover {
   position: relative;
   overflow: hidden;
 }
+
 
 .chips {
   display: flex;
@@ -113,8 +133,8 @@ button:hover {
 .pokerchip.white { background: #dad2ba; }
 .pokerchip.red { background: #bc2943; }
 .pokerchip.blue { background: #007b93; }
-.pokerchip.green { background: #70ffcd; }
-.pokerchip.black { background: #231f20; }
+.pokerchip.green { background: #8dfbd4; }
+.pokerchip.black { background: #000000; }
 
 .pokerchip.white {
   background: #dad2ba;

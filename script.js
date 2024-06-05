@@ -26,6 +26,37 @@ document.addEventListener("DOMContentLoaded", function() {
     hitButton.addEventListener("click", hitCard);
     standButton.addEventListener("click", standCard);
 
+    document.getElementById("confirm-bet-button").addEventListener("click", confirmBet);
+    document.getElementById("clear-bet-button").addEventListener("click", clearBet);
+
+    function confirmBet() {
+        document.getElementById("hit-button").style.display = 'inline-block';
+        document.getElementById("stand-button").style.display = 'inline-block';
+        document.getElementById("confirm-bet-button").style.display = 'none';
+        document.getElementById("clear-bet-button").style.display = 'none';
+        document.getElementById("confirm-bet-button").disabled = true;
+        document.getElementById("clear-bet-button").disabled = true;
+        chipsContainer.querySelectorAll(".pokerchip").forEach(chip => {
+            chip.draggable = false; // Prevent further dragging
+        });
+        dealCards(); // Automatically start the game
+    }
+
+    function clearBet() {
+        currentBet = 0;
+        betAmountElement.textContent = `Bet: $0`;
+        dropZone.innerHTML = '';
+        document.getElementById("confirm-bet-button").style.display = 'none';
+        document.getElementById("clear-bet-button").style.display = 'none';
+        chipsContainer.querySelectorAll(".pokerchip").forEach(chip => {
+            chip.draggable = true; // Re-enable chip dragging
+        });
+    }
+    
+
+
+
+
     function createDeck() {
         return fetch('https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1')
             .then(response => response.json())
@@ -116,14 +147,27 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     function endGame() {
+        // Disable and hide the game action buttons
         hitButton.disabled = true;
         standButton.disabled = true;
-        dealButton.disabled = false;
         hitButton.style.display = 'none';
         standButton.style.display = 'none';
-        dealButton.style.display = 'inline-block';
-        removeChipsFromDropZone();
+    
+        // Hide the confirm and clear bet buttons (just in case they are still visible)
+        document.getElementById("confirm-bet-button").style.display = 'none';
+        document.getElementById("clear-bet-button").style.display = 'none';
+    
+        // Enable the chips to be draggable for the next round
+        chipsContainer.querySelectorAll(".pokerchip").forEach(chip => {
+            chip.draggable = true; // Re-enable for new betting round
+        });
+    
+        // Set the message prompting the user to place their bets
+        messageElement.textContent = "Place your bets for the next round!";
+        removeChipsFromDropZone(); // Clear the bet amount and reset the drop zone
     }
+    
+    
 
     function removeChipsFromDropZone() {
         dropZone.innerHTML = '';
@@ -219,6 +263,11 @@ document.addEventListener("DOMContentLoaded", function() {
         const chipValue = parseInt(e.dataTransfer.getData("text/plain"));
         currentBet += chipValue;
         betAmountElement.textContent = `Bet: $${currentBet}`;
+
+        document.getElementById("confirm-bet-button").disabled = false;
+        document.getElementById("clear-bet-button").disabled = false;
+        document.getElementById("confirm-bet-button").style.display = 'inline-block';
+        document.getElementById("clear-bet-button").style.display = 'inline-block';
     
         const chipElement = document.createElement("div");
         chipElement.classList.add("pokerchip");
