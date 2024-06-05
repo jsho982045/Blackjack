@@ -219,7 +219,7 @@ document.addEventListener("DOMContentLoaded", function() {
         const chipValue = parseInt(e.dataTransfer.getData("text/plain"));
         currentBet += chipValue;
         betAmountElement.textContent = `Bet: $${currentBet}`;
-
+    
         const chipElement = document.createElement("div");
         chipElement.classList.add("pokerchip");
         chipElement.dataset.value = chipValue;
@@ -227,9 +227,19 @@ document.addEventListener("DOMContentLoaded", function() {
         chipElement.style.height = "20px";
         chipElement.style.fontSize = "12px";
         chipElement.style.lineHeight = "20px";
-        chipElement.style.backgroundImage = e.target.style.backgroundImage;
+    
+        // Set background color of the chip based on its value
+        const chipColor = getChipColor(chipValue);
+        chipElement.style.backgroundColor = chipColor;
+    
         dropZone.appendChild(chipElement);
+    
+        // Adjust position of chip inside drop zone
+        chipElement.style.position = 'absolute';
+        chipElement.style.left = `${e.offsetX - chipElement.offsetWidth / 2}px`; // Centering the chip
+        chipElement.style.top = `${e.offsetY - chipElement.offsetHeight / 2}px`; // Centering the chip
     });
+    
 
     function getChipColor(value) {
         switch (value) {
@@ -241,10 +251,8 @@ document.addEventListener("DOMContentLoaded", function() {
                 return "green";
             case 50:
                 return "black";
-            case 100:
-                return "yellow";
             default:
-                return "gray";
+                return "white";
         }
     }
 });
