@@ -33,7 +33,7 @@ body {
 }
 
 .card.back {
-  background-image: url('path_to_back_of_card_image'); /* Replace with the actual path to the back of the card image */
+  background-image: url('cardBack1.PNG'); /* Replace with the actual path to the back of the card image */
   background-size: cover;
 }
 
