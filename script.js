@@ -54,7 +54,19 @@ document.addEventListener("DOMContentLoaded", function() {
     }
     
 
-
+    function showPopup(message) {
+        document.getElementById("popup-message").textContent = message;
+        document.getElementById("popup").style.display = "flex";
+    }
+    
+    document.getElementById("close-button").addEventListener("click", function() {
+        document.getElementById("popup").style.display = "none";
+    });
+    
+    document.getElementById("close-popup").addEventListener("click", function() {
+        document.getElementById("popup").style.display = "none";
+    });
+    
 
 
     function createDeck() {
@@ -225,15 +237,17 @@ document.addEventListener("DOMContentLoaded", function() {
 
     function determineWinner() {
         const finalDealerScore = calculateScore(dealerCards);
+        let message = "";
         if (finalDealerScore > playerScore && finalDealerScore <= 21) {
-            messageElement.textContent = "Dealer wins!";
+            message = "Sorry, you lost. Try again!";
             removeChipsFromDropZone(); // Remove chips if the player loses
         } else if (finalDealerScore === playerScore) {
             messageElement.textContent = "It's a tie!";
         } else {
-            messageElement.textContent = "You win!";
+            message = "Congratulations! You win!";
             // Handle win logic, e.g., doubling the bet
         }
+        showPopup(message);
         betAmountElement.textContent = `Bet: $${currentBet}`;
         endGame();
     }
