@@ -53,10 +53,10 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
-    function updateScores() {
-        dealerScore = calculateScore(dealerCards, true); // Calculate dealer score with hidden card
+    function updateScores(initial = false) {
+        dealerScore = calculateScore(dealerCards, initial); // Calculate dealer score with hidden card if initial is true
         playerScore = calculateScore(playerCards);
-        dealerScoreElement.textContent = `Score: ${dealerScore}`;
+        dealerScoreElement.textContent = `Score: ${initial ? getCardValue(dealerCards[0]) : dealerScore}`;
         playerScoreElement.textContent = `Score: ${playerScore}`;
     }
 
@@ -136,7 +136,7 @@ document.addEventListener("DOMContentLoaded", function() {
             drawCards(4).then(cards => {
                 dealerCards = [cards[0], cards[1]];
                 playerCards = [cards[2], cards[3]];
-                updateScores();
+                updateScores(true); // Pass true to indicate the initial render with one dealer card hidden
                 renderCards(true); // Pass true to indicate the initial render with one dealer card hidden
                 messageElement.textContent = "";
                 hitButton.style.display = 'inline-block';
@@ -152,19 +152,19 @@ document.addEventListener("DOMContentLoaded", function() {
     function hitCard() {
         drawCards(1).then(cards => {
             playerCards.push(cards[0]);
-            updateScores(); // Update the scores
+            updateScores(true); // Update the scores with dealer's hidden card
             renderCards(true); // Render the updated cards with dealer's hidden card
             checkForEndGame(); // Check for end game conditions
         });
     }
 
     function standCard() {
+        revealDealerCard(); // Reveal the dealer's hidden card
         function dealerPlay() {
-            revealDealerCard(); // Reveal the dealer's hidden card
             if (calculateScore(dealerCards) < 17) {
                 drawCards(1).then(cards => {
                     dealerCards.push(cards[0]);
-                    updateScores();
+                    updateScores(); // Update scores without hiding any cards
                     renderCards(); // Render all cards, no hidden ones
                     if (calculateScore(dealerCards) < 17) {
                         dealerPlay();
@@ -180,11 +180,11 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     function determineWinner() {
-        revealDealerCard(); // Ensure dealer's card is revealed at the end of the game
-        if (dealerScore > playerScore && dealerScore <= 21) {
+        const finalDealerScore = calculateScore(dealerCards);
+        if (finalDealerScore > playerScore && finalDealerScore <= 21) {
             messageElement.textContent = "Dealer wins!";
             removeChipsFromDropZone(); // Remove chips if the player loses
-        } else if (dealerScore === playerScore) {
+        } else if (finalDealerScore === playerScore) {
             messageElement.textContent = "It's a tie!";
         } else {
             messageElement.textContent = "You win!";
