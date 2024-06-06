@@ -166,6 +166,11 @@ button:hover {
   border: 13px dashed white;
 }
 
+.pokerchip.purple {
+  background: #7b5a94;
+  border: 13px dashed white;
+}
+
 .pokerchip.black {
   background: #231f20;
   border: 13px dashed white;
@@ -217,7 +222,6 @@ button:hover {
 
 .wallet {
   position: absolute; /* Absolute position within the chips container */
-  left: calc(100% + 10px); /* Place it right after the chips container */
   top: 50%; /* Center it vertically */
   transform: translateY(-50%); /* Ensure it centers correctly */
   color: #00ff00;
@@ -228,8 +232,7 @@ button:hover {
 
 @media (min-width: 1024px) {
   .wallet {
-    left: auto; /* Reset left for larger screens if needed */
-    margin-right: 15px; /* Space it a bit from the right end of the chips container */
+    margin-right: -100px; /* Space it a bit from the right end of the chips container */
     margin-top: 125px; /* Space it a bit from the bottom */
   }
 }
