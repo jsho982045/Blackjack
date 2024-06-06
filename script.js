@@ -59,9 +59,6 @@ document.addEventListener("DOMContentLoaded", function() {
         document.getElementById("popup").style.display = "flex";
     }
     
-    document.getElementById("close-button").addEventListener("click", function() {
-        document.getElementById("popup").style.display = "none";
-    });
     
     document.getElementById("close-popup").addEventListener("click", function() {
         document.getElementById("popup").style.display = "none";
@@ -161,30 +158,60 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
-    function endGame() {
+    function sweepCards() {
+        let allCards = document.querySelectorAll('.card');
+        allCards.forEach(card => {
+            card.style.transition = 'transform 0.5s ease-in-out';
+            card.style.transform = 'translateX(-100vw)'; // Sweep to the left
+        });
 
-        dealerScoreElement.style.display = 'none';
-        playerScoreElement.style.display = 'none';
-        
-        // Disable and hide the game action buttons
+        setTimeout(() => {
+            resetGame(); // Clears the table and resets the game state
+        }, 500);
+    }
+
+    document.getElementById("close-button").addEventListener("click", function() {
+        document.getElementById("popup").style.display = "none";
+        sweepCards();
+    });
+
+
+    function endGame() {
+        // Setup the game for reset but do not clear cards here
         hitButton.disabled = true;
         standButton.disabled = true;
         hitButton.style.display = 'none';
         standButton.style.display = 'none';
-    
-        // Hide the confirm and clear bet buttons (just in case they are still visible)
         document.getElementById("confirm-bet-button").style.display = 'none';
         document.getElementById("clear-bet-button").style.display = 'none';
-    
-        // Enable the chips to be draggable for the next round
-        chipsContainer.querySelectorAll(".pokerchip").forEach(chip => {
-            chip.draggable = true; // Re-enable for new betting round
-        });
-    
-        // Set the message prompting the user to place their bets
-        messageElement.textContent = "Place your bets for the next round!";
-        removeChipsFromDropZone(); // Clear the bet amount and reset the drop zone
     }
+    
+    function resetGame() {
+        // Clear the cards from the game area
+        dealerCardsElement.innerHTML = '';
+        playerCardsElement.innerHTML = '';
+        
+        // Hide scores and reset interaction elements
+        dealerScoreElement.style.display = 'none';
+        playerScoreElement.style.display = 'none';
+    
+        // Re-enable the chips for a new betting round
+        chipsContainer.querySelectorAll(".pokerchip").forEach(chip => {
+            chip.draggable = true;
+        });
+        // Update the message for the user
+    messageElement.textContent = "Place your bets for the next round!";
+    removeChipsFromDropZone();
+
+    // Reset game state variables
+    currentBet = 0;
+    betAmountElement.textContent = `Bet: $${currentBet}`;
+    dealerCards = [];
+    playerCards = [];
+    dealerScore = 0;
+    playerScore = 0;
+}
+    
     
     
 
@@ -254,9 +281,11 @@ document.addEventListener("DOMContentLoaded", function() {
             message = "Congratulations! You win!";
             // Handle win logic, e.g., doubling the bet
         }
-        showPopup(message);
-        betAmountElement.textContent = `Bet: $${currentBet}`;
-        endGame();
+        if (message !== "") {
+            showPopup(message);  // Ensure the popup is always shown regardless of the outcome
+            betAmountElement.textContent = `Bet: $${currentBet}`;
+            endGame();
+        }
     }
 
     // Make chips draggable
