@@ -115,6 +115,7 @@ button:hover {
 
 
 .chips {
+  position: relative;
   display: flex;
   justify-content: center;
   gap: 15px;
@@ -213,3 +214,35 @@ button:hover {
 }
 
 
+
+.wallet {
+  position: absolute; /* Absolute position within the chips container */
+  left: calc(100% + 10px); /* Place it right after the chips container */
+  top: 50%; /* Center it vertically */
+  transform: translateY(-50%); /* Ensure it centers correctly */
+  color: #00ff00;
+  font-family: 'Digital-7', monospace;
+  font-size: 18px;
+  z-index: 10;
+}
+
+@media (min-width: 1024px) {
+  .wallet {
+    left: auto; /* Reset left for larger screens if needed */
+    margin-right: 15px; /* Space it a bit from the right end of the chips container */
+    margin-top: 125px; /* Space it a bit from the bottom */
+  }
+}
+
+@media (max-width: 768px) {
+  .controls-container {
+    flex-direction: column;
+  }
+
+  .wallet {
+    order: -1; /* Ensures it's placed at the top in a mobile view */
+    top: -40px; /* Position it above the chips container */
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}

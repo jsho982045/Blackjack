@@ -20,25 +20,28 @@
             <div id="bet-amount" class="bet">Bet: $0</div>
             <div id="chip-drop-zone" class="drop-zone"></div>
         </div>
-        <div class="controls">
-            <button id="deal-button">Deal</button>
-            <button id="hit-button" disabled>Hit</button>
-            <button id="stand-button" disabled>Stand</button>
-            <button id="split-button" disabled>Split</button>
-            <button id="confirm-bet-button" style="display: none;" disabled>Confirm Bet</button>
-            <button id="clear-bet-button" style="display: none;" disabled>Clear Bet</button>
-        </div>
-        <div id="chips" class="chips">
-            <div class="pokerchip chip white" data-value="1" draggable="true">$1</div>
-            <div class="pokerchip chip red" data-value="5" draggable="true">$5</div>
-            <div class="pokerchip chip blue" data-value="10" draggable="true">$10</div>
-            <div class="pokerchip chip green" data-value="25" draggable="true">$25</div>
-            <div class="pokerchip chip black" data-value="100" draggable="true">$100</div>
+        <div class="controls-container">
+            <div id="wallet" class="wallet">Wallet: $0.00</div>
+            <div class="controls">
+                <button id="deal-button">Deal</button>
+                <button id="hit-button" disabled>Hit</button>
+                <button id="stand-button" disabled>Stand</button>
+                <button id="split-button" disabled>Split</button>
+                <button id="confirm-bet-button" style="display: none;" disabled>Confirm Bet</button>
+                <button id="clear-bet-button" style="display: none;" disabled>Clear Bet</button>
+            </div>
+            <div id="chips" class="chips">
+                <div class="pokerchip chip white" data-value="1" draggable="true">$1</div>
+                <div class="pokerchip chip red" data-value="5" draggable="true">$5</div>
+                <div class="pokerchip chip blue" data-value="10" draggable="true">$10</div>
+                <div class="pokerchip chip green" data-value="25" draggable="true">$25</div>
+                <div class="pokerchip chip black" data-value="100" draggable="true">$100</div>
+            </div>
         </div>
         <div id="message"></div>
         <div id="popup" class="popup" style="display: none;">
             <div class="popup-content">
-                <span id="close-popup" class="close-btn">&times;</span>
+                <span id="close-popup" the="close-btn">&times;</span>
                 <p id="popup-message"></p>
                 <button id="close-button">OK</button>
             </div>

@@ -139,25 +139,30 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     function checkForEndGame() {
-        if (playerScore === 21) {
+        if (playerScore === 21 && playerCards.length === 2) {  // Checks for Blackjack immediately after dealing
             messageElement.textContent = "Blackjack! You win!";
+            showPopup("Blackjack! You win!");
+            updateWallet(currentBet * 1.5);  // Assuming Blackjack pays 3 to 2
             revealDealerCard();
             endGame();
         } else if (playerScore > 21) {
-            messageElement.textContent = "You busted! Dealer wins!";
+            showPopup("You busted! Dealer wins!");
+            updateWallet(-currentBet);
             revealDealerCard();
             endGame();
         } else if (dealerScore === 21) {
-            messageElement.textContent = "Dealer has Blackjack! Dealer wins!";
+            showPopup("Dealer has Blackjack! Dealer wins!");
+            updateWallet(-currentBet);
             revealDealerCard();
             endGame();
         } else if (dealerScore > 21) {
-            messageElement.textContent = "Dealer busted! You win!";
+            showPopup("Dealer busted! You win!");
+            updateWallet(currentBet);
             revealDealerCard();
             endGame();
         }
     }
-
+    
     function sweepCards() {
         let allCards = document.querySelectorAll('.card');
         allCards.forEach(card => {
@@ -269,23 +274,29 @@ document.addEventListener("DOMContentLoaded", function() {
         dealerPlay();
     }
 
-    function determineWinner() {
+    function updateWallet(amount) {
+        const walletElement = document.getElementById('wallet');
+        let currentBalance = parseFloat(walletElement.textContent.replace('Wallet: $', ''));
+        currentBalance += amount;
+        walletElement.textContent = `Wallet: $${currentBalance.toFixed(2)}`;
+      }
+      
+
+      function determineWinner() {
         const finalDealerScore = calculateScore(dealerCards);
-        let message = "";
         if (finalDealerScore > playerScore && finalDealerScore <= 21) {
-            message = "Sorry, you lost. Try again!";
-            removeChipsFromDropZone(); // Remove chips if the player loses
+            messageElement.textContent = "Sorry, you lost. Try again!";
+            showPopup("Sorry, you lost. Try again!");
+            updateWallet(-currentBet);
         } else if (finalDealerScore === playerScore) {
             messageElement.textContent = "It's a tie!";
+            showPopup("It's a tie!");
         } else {
-            message = "Congratulations! You win!";
-            // Handle win logic, e.g., doubling the bet
+            messageElement.textContent = "Congratulations! You win!";
+            showPopup("Congratulations! You win!");
+            updateWallet(currentBet);
         }
-        if (message !== "") {
-            showPopup(message);  // Ensure the popup is always shown regardless of the outcome
-            betAmountElement.textContent = `Bet: $${currentBet}`;
-            endGame();
-        }
+        endGame(); // Call endGame here to manage game state after determining winner
     }
 
     // Make chips draggable
