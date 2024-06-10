@@ -17,7 +17,13 @@ document.addEventListener("DOMContentLoaded", function() {
     document.querySelector(".table").style.display = "none"; // Hide game table initially
 
     
-    function startAnimation() {
+    homeScreenCards.forEach((card, index) => {
+        const isRedBack = index % 2 === 0; // Alternate card back colors
+        const backImage = isRedBack ? 'cardBack1.PNG' : 'cardBackBlack.PNG';
+        card.style.backgroundImage = `url('${backImage}')`; // Set the back image
+    });
+
+            function startAnimation() {
         homeScreenCards.forEach((card, index) => {
             setTimeout(() => {
                 card.classList.add('reveal');
@@ -27,6 +33,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
                 const back = document.createElement('div');
                 back.className = 'back';
+                back.style.backgroundImage = card.style.backgroundImage; // Use the same image set initially
 
                 card.appendChild(front);
                 card.appendChild(back);
@@ -41,13 +48,6 @@ document.addEventListener("DOMContentLoaded", function() {
         }, homeScreenCards.length * 200 + 1000); // Add an extra 1 second delay after the last card flips
     }
 
-    playButton.addEventListener("click", function() {
-        homeScreen.style.display = "none"; // Hide home screen
-        document.querySelector(".table").style.display = "block"; // Show game table
-    });
-
-    // Start the animation
-    startAnimation();
 
     let dealerCards = [];
     let playerCards = [];
@@ -403,4 +403,6 @@ document.addEventListener("DOMContentLoaded", function() {
                 return "white";
         }
     }
+
+    startAnimation();
 });

@@ -335,7 +335,7 @@ button:hover {
 
 .play-button {
   font-size: 36px;
-  color: #FFD700; 
+  color: #58ee0d; 
   text-shadow: 
     0 0 5px #FFD700, 
     0 0 10px #FFD700, 
@@ -345,7 +345,7 @@ button:hover {
     0 0 40px #FF8C00, 
     0 0 55px #FF4500, 
     0 0 75px #FF4500;
-  border: 2px solid #FFD700; 
+  border: 2px solid #19340b;
   border-radius: 10px;
   padding: 10px 20px;
   display: none;
@@ -364,8 +364,8 @@ button:hover {
 @keyframes blink {
   from {
     text-shadow: 
-      0 0 5px #FFD700, 
-      0 0 10px #FFD700, 
+      0 0 5px #58ee0d, 
+      0 0 10px #58ee0d, 
       0 0 15px #FFD700, 
       0 0 20px #FF8C00, 
       0 0 30px #FF8C00, 
