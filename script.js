@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", function() {
         card.style.backgroundImage = `url('${backImage}')`; // Set the back image
     });
 
-            function startAnimation() {
+    function startAnimation() {
         homeScreenCards.forEach((card, index) => {
             setTimeout(() => {
                 card.classList.add('reveal');
@@ -47,6 +47,14 @@ document.addEventListener("DOMContentLoaded", function() {
             }, 50); // Slight delay to trigger the transition
         }, homeScreenCards.length * 200 + 1000); // Add an extra 1 second delay after the last card flips
     }
+
+    playButton.addEventListener("click", function() {
+        homeScreen.style.display = "none"; // Hide home screen
+        document.querySelector(".table").style.display = "block"; // Show game table
+    });
+
+    // Start the animation
+    startAnimation();
 
 
     let dealerCards = [];
@@ -403,6 +411,4 @@ document.addEventListener("DOMContentLoaded", function() {
                 return "white";
         }
     }
-
-    startAnimation();
 });
