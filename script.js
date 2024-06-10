@@ -10,6 +10,44 @@ document.addEventListener("DOMContentLoaded", function() {
     const chipsContainer = document.getElementById("chips");
     const dropZone = document.getElementById("chip-drop-zone");
     const betAmountElement = document.getElementById("bet-amount");
+    const playButton = document.getElementById("play-button");
+    const homeScreen = document.getElementById("home-screen");
+    const homeScreenCards = document.querySelectorAll('.home-screen-card');
+
+    document.querySelector(".table").style.display = "none"; // Hide game table initially
+
+    
+    function startAnimation() {
+        homeScreenCards.forEach((card, index) => {
+            setTimeout(() => {
+                card.classList.add('reveal');
+                const front = document.createElement('div');
+                front.className = 'front';
+                front.textContent = card.getAttribute("data-letter");
+
+                const back = document.createElement('div');
+                back.className = 'back';
+
+                card.appendChild(front);
+                card.appendChild(back);
+            }, index * 200);
+        });
+
+        setTimeout(() => {
+            playButton.style.display = "block";
+            setTimeout(() => {
+                playButton.classList.add('show');
+            }, 50); // Slight delay to trigger the transition
+        }, homeScreenCards.length * 200 + 1000); // Add an extra 1 second delay after the last card flips
+    }
+
+    playButton.addEventListener("click", function() {
+        homeScreen.style.display = "none"; // Hide home screen
+        document.querySelector(".table").style.display = "block"; // Show game table
+    });
+
+    // Start the animation
+    startAnimation();
 
     let dealerCards = [];
     let playerCards = [];

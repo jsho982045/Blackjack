@@ -114,6 +114,7 @@ button:hover {
 }
 
 
+
 .chips {
   position: relative;
   display: flex;
@@ -232,8 +233,8 @@ button:hover {
 
 @media (min-width: 1024px) {
   .wallet {
-    margin-right: -100px; /* Space it a bit from the right end of the chips container */
-    margin-top: 125px; /* Space it a bit from the bottom */
+    margin-left: 25px; /* Space it a bit from the right end of the chips container */
+    margin-top: 110px; /* Space it a bit from the bottom */
   }
 }
 
@@ -248,4 +249,141 @@ button:hover {
     left: 50%;
     transform: translateX(-50%);
   }
+}
+
+.home-screen {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: #006400;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.animation-container {
+  position: relative;
+  width: 400px;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.home-screen-cards {
+  display: flex;
+  position: relative;
+  gap: 20px;
+}
+
+.home-screen-card {
+  width: 50px;
+  height: 70px;
+  background-image: url('cardBack1.PNG'); /* Replace with the actual path to the back of the card image */
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  font-weight: bold;
+  position: relative;
+  z-index: 0;
+  transform-style: preserve-3d;
+  transition: transform 1.6s;
+}
+
+.home-screen-card.reveal {
+  transform: rotateY(180deg);
+}
+
+.home-screen-card .front,
+.home-screen-card .back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.home-screen-card .front {
+  transform: rotateY(180deg);
+  background-color: white;
+}
+
+.home-screen-card .back {
+  background-image: url('cardBack1.PNG'); /* Replace with the actual path to the back of the card image */
+}
+
+
+
+@keyframes revealCard {
+  0% {
+      opacity: 0;
+      transform: translateY(-50px);
+  }
+  100% {
+      opacity: 1;
+      transform: translateY(0);
+  }
+}
+
+.play-button {
+  font-size: 36px;
+  color: #FFD700; /* Gold color */
+  text-shadow: 
+    0 0 5px #FFD700, 
+    0 0 10px #FFD700, 
+    0 0 15px #FFD700, 
+    0 0 20px #FF8C00, /* Dark orange */
+    0 0 30px #FF8C00, 
+    0 0 40px #FF8C00, 
+    0 0 55px #FF4500, /* Orange red */
+    0 0 75px #FF4500;
+  border: 2px solid #FFD700; /* Gold border */
+  border-radius: 10px;
+  padding: 10px 20px;
+  display: none;
+  background-color: rgba(0, 0, 0, 0.5); /* Slightly transparent black background */
+  opacity: 0; /* Start with the button hidden */
+  transition: opacity 2s ease-in-out, transform 2s ease-in-out; /* Smooth transition */
+  transform: scale(0); /* Start scaled down */
+}
+
+.play-button.show {
+  display: block;
+  opacity: 1; /* Reveal the button */
+  transform: scale(1); /* Scale to normal size */
+}
+
+@keyframes blink {
+  from {
+    text-shadow: 
+      0 0 5px #FFD700, 
+      0 0 10px #FFD700, 
+      0 0 15px #FFD700, 
+      0 0 20px #FF8C00, 
+      0 0 30px #FF8C00, 
+      0 0 40px #FF8C00, 
+      0 0 55px #FF4500, 
+      0 0 75px #FF4500;
+  }
+  to {
+    text-shadow: 
+      0 0 2px #FFD700, 
+      0 0 4px #FFD700, 
+      0 0 6px #FFD700, 
+      0 0 10px #FF8C00, 
+      0 0 15px #FF8C00, 
+      0 0 20px #FF4500, 
+      0 0 25px #FF4500, 
+      0 0 35px #FF4500;
+  }
+}
+
+.play-button:hover {
+  background-color: rgba(0, 0, 0, 0.7); /* Darker transparent background on hover */
 }
