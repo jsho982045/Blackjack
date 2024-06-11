@@ -139,13 +139,10 @@ button:hover {
   color: rgb(211, 144, 0);
   background-size: cover;
   cursor: pointer;
+  
 }
 
-.pokerchip.white { background: #dad2ba; }
-.pokerchip.red { background: #bc2943; }
-.pokerchip.blue { background: #007b93; }
-.pokerchip.green { background: #8dfbd4; }
-.pokerchip.black { background: #000000; }
+
 
 .pokerchip.white {
   background: #dad2ba;
@@ -161,6 +158,8 @@ button:hover {
   background: #007b93;
   border: 13px dashed white;
 }
+
+
 
 .pokerchip.green {
   background: #00794e;
@@ -218,8 +217,6 @@ button:hover {
       opacity: 0;
   }
 }
-
-
 
 .wallet {
   position: absolute; 
@@ -355,10 +352,40 @@ button:hover {
   transform: scale(0); /* Start scaled down */
 }
 
-.play-button.show {
+.login-button {
+  font-size: 36px;
+  color: #58ee0d; 
+  text-shadow: 
+    0 0 5px #FFD700, 
+    0 0 10px #FFD700, 
+    0 0 15px #FFD700, 
+    0 0 20px #FF8C00, 
+    0 0 30px #FF8C00, 
+    0 0 40px #FF8C00, 
+    0 0 55px #FF4500, 
+    0 0 75px #FF4500;
+  border: 2px solid #19340b;
+  border-radius: 10px;
+  padding: 10px 20px;
+  display: none;
+  background-color: rgba(0, 0, 0, 0.5); /* Slightly transparent black background */
+  opacity: 0; /* Start with the button hidden */
+  transition: opacity 2s ease-in-out, transform 2s ease-in-out; /* Smooth transition */
+  transform: scale(0); /* Start scaled down */
+}
+
+.play-button.show, .login-button.show {
   display: block;
   opacity: 1; /* Reveal the button */
   transform: scale(1); /* Scale to normal size */
+}
+
+.login-button:hover {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+#login-button {
+  margin-top: 30px;
 }
 
 @keyframes blink {
@@ -389,3 +416,70 @@ button:hover {
 .play-button:hover {
   background-color: rgba(0, 0, 0, 0.7); 
 }
+
+/* Add these styles to your existing CSS */
+
+/* Auth Modal */
+.auth-modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1000; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.auth-modal-content {
+  background-color: #fefefe;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+}
+
+.close-btn {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.auth-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.auth-container h2 {
+  margin-bottom: 20px;
+}
+
+.auth-container form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.auth-container form input {
+  margin: 10px 0;
+  padding: 8px;
+  width: 100%;
+  max-width: 300px;
+}
+
+.auth-container form button {
+  padding: 10px 20px;
+  margin-top: 10px;
+}
+

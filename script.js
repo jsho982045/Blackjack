@@ -13,6 +13,15 @@ document.addEventListener("DOMContentLoaded", function() {
     const playButton = document.getElementById("play-button");
     const homeScreen = document.getElementById("home-screen");
     const homeScreenCards = document.querySelectorAll('.home-screen-card');
+    const authModal = document.getElementById('auth-modal');
+    const closeAuthModal = document.getElementById('close-auth-modal');
+    const loginButton = document.getElementById('login-button');
+    const showLoginLink = document.getElementById('show-login');
+    const showRegisterLink = document.getElementById('show-register');
+    const loginContainer = document.getElementById('login-container');
+    const registerContainer = document.getElementById('register-container');
+    
+    
 
     document.querySelector(".table").style.display = "none"; // Hide game table initially
 
@@ -42,8 +51,10 @@ document.addEventListener("DOMContentLoaded", function() {
 
         setTimeout(() => {
             playButton.style.display = "block";
+            loginButton.style.display = "block";
             setTimeout(() => {
                 playButton.classList.add('show');
+                loginButton.classList.add('show');
             }, 50); // Slight delay to trigger the transition
         }, homeScreenCards.length * 200 + 1000); // Add an extra 1 second delay after the last card flips
     }
@@ -52,6 +63,101 @@ document.addEventListener("DOMContentLoaded", function() {
         homeScreen.style.display = "none"; // Hide home screen
         document.querySelector(".table").style.display = "block"; // Show game table
     });
+
+    loginButton.addEventListener('click', () => {
+        authModal.style.display = 'block';
+    });
+    
+    closeAuthModal.addEventListener('click', () => {
+        authModal.style.display = 'none';
+    });
+    
+    window.addEventListener('click', (event) => {
+        if (event.target === authModal) {
+            authModal.style.display = 'none';
+        }
+    });
+    
+    showLoginLink.addEventListener('click', (event) => {
+        event.preventDefault();
+        console.log('Login link clicked'); // Debugging log
+        registerContainer.style.display = 'none';
+        loginContainer.style.display = 'block';
+    });
+    
+    showRegisterLink.addEventListener('click', (event) => {
+        event.preventDefault();
+        console.log('Register link clicked'); // Debugging log
+        loginContainer.style.display = 'none';
+        registerContainer.style.display = 'block';
+    });
+
+    // User registration form submission
+    document.getElementById('register-form').addEventListener('submit', async (event) => {
+        event.preventDefault();
+        console.log('Register form submitted');
+
+        const username = document.getElementById('register-username').value;
+        const password = document.getElementById('register-password').value;
+        const confirmPassword = document.getElementById('confirm-password').value;
+
+        if (password !== confirmPassword) {
+            alert('Passwords do not match');
+            console.log('Passwords do not match');
+            return;
+        }
+        try {
+            const response = await fetch('/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username, password })
+            });
+
+            const result = await response.json();
+            console.log('Registration reponse:', result);
+            if (response.ok) {
+                alert('Registration successful');
+            } else {
+                alert(`Error: ${result.error}`);
+                console.log('Error: ${result.error}');
+            }
+        }catch(error){
+            console.error('Error registering user:', error);
+            alert('Error registering user');
+        }
+    });
+
+    // User login form submission
+    document.getElementById('login-form').addEventListener('submit', async (event) => {
+        event.preventDefault();
+        console.log('Login form submitted');
+
+        const username = document.getElementById('login-username').value;
+        const password = document.getElementById('login-password').value;
+
+        const response = await fetch('/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ username, password })
+        });
+
+        const result = await response.json();
+        console.log('Login response:', result);
+        if (response.ok) {
+            alert('Login successful');
+            document.getElementById('home-screen').style.display = 'block'; // Show home screen
+            document.querySelector('.login-container').style.display = 'none'; // Hide login form
+            document.querySelector('.register-container').style.display = 'none'; // Hide register form
+        } else {
+            alert(`Error: ${result.error}`);
+            console.log('Error: ${result.error}');
+        }
+    });
+
 
     // Start the animation
     startAnimation();
@@ -325,6 +431,12 @@ document.addEventListener("DOMContentLoaded", function() {
         let currentBalance = parseFloat(walletElement.textContent.replace('Wallet: $', ''));
         currentBalance += amount;
         walletElement.textContent = `Wallet: $${currentBalance.toFixed(2)}`;
+
+        if (currentBalance < 0) {
+            walletElement.style.color = 'red';
+        }else {
+            walletElement.style.color = '#00ff00';
+        }
       }
       
 
@@ -399,14 +511,18 @@ document.addEventListener("DOMContentLoaded", function() {
 
     function getChipColor(value) {
         switch (value) {
+            case 1:
+                return "#dad2ba";
             case 5:
-                return "red";
+                return "#bc2943";
             case 10:
-                return "blue";
+                return "#009b93";
             case 25:
-                return "green";
+                return "#00794e";
             case 50:
-                return "black";
+                return "#7b5a94";
+            case 100:
+                return "#231f20";
             default:
                 return "white";
         }
