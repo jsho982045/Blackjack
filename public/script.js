@@ -17,12 +17,14 @@ document.addEventListener("DOMContentLoaded", function() {
     const authModal = document.getElementById('auth-modal');
     const closeAuthModal = document.getElementById('close-auth-modal');
     const loginButton = document.getElementById('login-button');
+    const logoutButton = document.getElementById('logout-button');
     const showLoginLink = document.getElementById('show-login');
     const showRegisterLink = document.getElementById('show-register');
     const loginContainer = document.getElementById('login-container');
     const registerContainer = document.getElementById('register-container');
 
     document.querySelector(".table").style.display = "none"; // Hide game table initially
+    logoutButton.style.display = 'none'; // Hide logout button initially
 
     homeScreenCards.forEach((card, index) => {
         const isRedBack = index % 2 === 0; // Alternate card back colors
@@ -150,6 +152,8 @@ document.addEventListener("DOMContentLoaded", function() {
                 authModal.style.display = 'none';
                 document.getElementById('home-screen').style.display = 'none';
                 document.querySelector('.table').style.display = 'block';
+                logoutButton.style.display = 'block'; // Show logout button
+                logoutButton.classList.add('show'); // Add visible class
             } else {
                 alert(`Error: ${result.error}`);
             }
@@ -158,7 +162,14 @@ document.addEventListener("DOMContentLoaded", function() {
             alert('Error logging in');
         }
     });
-    
+
+    logoutButton.addEventListener('click', function() {
+        localStorage.removeItem('username');  // Clear stored username
+        document.querySelector('.table').style.display = 'none'; // Hide the game area
+        document.getElementById('home-screen').style.display = 'block'; // Show the login/register screen
+        document.getElementById('wallet').textContent = 'Wallet: $0'; // Optionally reset the wallet display
+        logoutButton.classList.remove('show'); // Hide logout button
+    });
 
     // Start the animation
     startAnimation();
@@ -216,8 +227,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     function createDeck() {
         return fetch('https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1')
-            .then(response => response.json())
-            .then(data => {
+            .then(response => response.json())            .then(data => {
                 deckId = data.deck_id;
                 dealerCards = [];
                 playerCards = [];
@@ -443,7 +453,6 @@ document.addEventListener("DOMContentLoaded", function() {
         .then(data => console.log(data.message))
         .catch(error => console.error('Error updating wallet on server:', error));
     }
-    
 
     function determineWinner() {
         const finalDealerScore = calculateScore(dealerCards);
@@ -469,7 +478,6 @@ document.addEventListener("DOMContentLoaded", function() {
     
         endGame();
     }
-    
 
     // Make chips draggable
     chipsContainer.addEventListener("dragstart", function(e) {
@@ -529,7 +537,7 @@ document.addEventListener("DOMContentLoaded", function() {
             case 5:
                 return "#bc2943";
             case 10:
-                return "#009b93";
+                return "#007b93";
             case 25:
                 return "#00794e";
             case 50:
@@ -543,3 +551,7 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 
+           
+
+
+   

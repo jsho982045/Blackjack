@@ -14,7 +14,12 @@ body {
   background-color: #006400;
   border-radius: 50% 50% 0 0;
   border: 20px solid #8B4513;
-  position: absolute;
+  position: relative; /* Changed to relative */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
 }
 
 .dealer, .player {
@@ -42,15 +47,14 @@ body {
   background-size: cover;
 }
 
-
 .score {
   color: white;
   font-size: 18px;
   display: none;
 }
 
-#bet-amount{
-  margin-left: px;
+#bet-amount {
+  margin-left: 0;
 }
 
 .bet {
@@ -113,8 +117,6 @@ button:hover {
   overflow: hidden;
 }
 
-
-
 .chips {
   position: relative;
   display: flex;
@@ -139,10 +141,7 @@ button:hover {
   color: rgb(211, 144, 0);
   background-size: cover;
   cursor: pointer;
-  
 }
-
-
 
 .pokerchip.white {
   background: #dad2ba;
@@ -158,8 +157,6 @@ button:hover {
   background: #007b93;
   border: 13px dashed white;
 }
-
-
 
 .pokerchip.green {
   background: #00794e;
@@ -317,8 +314,6 @@ button:hover {
   background-size: cover;
 }
 
-
-
 @keyframes revealCard {
   0% {
       opacity: 0;
@@ -347,7 +342,7 @@ button:hover {
   padding: 10px 20px;
   display: none;
   background-color: rgba(0, 0, 0, 0.5); /* Slightly transparent black background */
-  opacity: 0; /* Start with the button hidden */
+  opacity: 0;
   transition: opacity 2s ease-in-out, transform 2s ease-in-out; /* Smooth transition */
   transform: scale(0); /* Start scaled down */
 }
@@ -386,6 +381,27 @@ button:hover {
 
 #login-button {
   margin-top: 30px;
+}
+
+#logout-button {
+  position: absolute; /* Position absolute to prevent layout shift */
+  top: 10px; /* Position it at the top */
+  right: 10px; /* Position it at the right */
+  background-color: #333;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  display: none;
+  z-index: 1000;
+}
+
+#logout-button:hover {
+  background-color: #555;
+}
+
+.logout-button.show {
+  display: block !important;
 }
 
 @keyframes blink {
@@ -482,4 +498,3 @@ button:hover {
   padding: 10px 20px;
   margin-top: 10px;
 }
-
