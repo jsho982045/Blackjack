@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     homeScreenCards.forEach((card, index) => {
         const isRedBack = index % 2 === 0; // Alternate card back colors
-        const backImage = isRedBack ? 'cardBack1.PNG' : 'cardBackBlack.PNG';
+        const backImage = isRedBack ? 'images/cardBack1.PNG' : 'images/cardBackBlack.PNG';
         card.style.backgroundImage = `url('${backImage}')`; // Set the back image
     });
 
